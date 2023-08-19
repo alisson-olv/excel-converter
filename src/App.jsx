@@ -27,7 +27,7 @@ function App() {
   const convertListCharacter = () => {
     const items = inputList.split('\n');
     const convertedItems = items.map(item => {
-      const trimmedItem = item.trim();
+      const trimmedItem = item.trim().replace("'", "");
       if (trimmedItem.length < characterLength) {
         const paddedItem = '0'.repeat(characterLength - trimmedItem.length) + trimmedItem;
         return paddedItem;
