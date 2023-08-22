@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { DarkThemeToggle, Flowbite } from 'flowbite-react';
+import { AiFillCheckCircle } from 'react-icons/ai';
 
 function App() {
   const [inputList, setInputList] = useState('');
   const [outputList, setOutputList] = useState('');
   const [optionChosed, setOptionChosed] = useState('apostrofo');
   const [characterLength, setCharacterLength] = useState(0);
+  const [hasCopied, setHasCopied] = useState(false);
 
-  // adicionar botão de copy no resultado
-  // adicionar opção de trocar um texto
+  const TIMEOUT_MS = 2000;
 
   const handleOptionChosed = (e) => {
-    setOptionChosed(e.target.value)
+    setOptionChosed(e.target.value);
     setOutputList('');
     setInputList('');
     setCharacterLength(0);
@@ -25,15 +26,32 @@ function App() {
     setCharacterLength(e.target.value);
   };
 
+  useEffect(() => {
+    setTimeout(() => {
+      setHasCopied(false);
+    }, TIMEOUT_MS);
+
+  }, [hasCopied])
+
+  const copyToClipboard = () => {
+    setHasCopied(true)
+
+    if (!navigator.clipboard) {
+      return;
+    }
+
+    return navigator.clipboard.writeText(outputList);
+  }
+
   const clearList = () => {
     setOutputList('');
     setInputList('');
+    setHasCopied(false)
   };
 
   const handleConverter = () => {
 
     if (optionChosed === 'apostrofo') {
-
       const items = inputList.split('\n');
 
       const convertedItems = items.map(item => {
@@ -44,7 +62,6 @@ function App() {
       setOutputList(convertedItems.join('\n'));
 
     } else if (optionChosed === 'caracteres') {
-
       const items = inputList.split('\n');
 
       const convertedItems = items.map(item => {
@@ -53,16 +70,17 @@ function App() {
           const paddedItem = '0'.repeat(characterLength - trimmedItem.length) + trimmedItem;
           return paddedItem;
         }
+
         return trimmedItem;
       });
 
       setOutputList(convertedItems.join('\n'));
 
     } else if (optionChosed === 'company-branch') {
-
       const items = inputList.split('\n');
       const convertedItems = items.map(item => {
         const twoDigits = item.substring(0, 2);
+
         return twoDigits;
       });
 
@@ -74,12 +92,10 @@ function App() {
 
       const convertedItems = items.map(item => {
         if (item.includes('OUTROS')) {
-
           const anotherOrder = item;
           return anotherOrder;
 
         } else {
-
           const twoDigitsOrder = item.substring(0, 2);
           return twoDigitsOrder;
         }
@@ -178,13 +194,23 @@ function App() {
               className="block p-4 text-xl text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cole a lista de itens do Excel aqui">
             </textarea>
 
-            <button
-              onClick={handleConverter}
-              type="button"
-              className="text-white bg-blue-700 hover:bg-blue-800 mt-4 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-            >
-              Converter
-            </button>
+            <div className='flex gap-3'>
+              <button
+                onClick={handleConverter}
+                type="button"
+                className="text-white bg-green-700 hover:bg-green-800 mt-4 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+              >
+                Converter
+              </button>
+
+              <button
+                onClick={clearList}
+                type="button"
+                className="focus:outline-none text-white mt-4 bg-red-700 hover:bg-red-800 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+              >
+                Limpar
+              </button>
+            </div>
           </div>
 
           <div>
@@ -205,11 +231,11 @@ function App() {
               className="block p-4 text-xl text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </textarea>
             <button
-              onClick={clearList}
+              onClick={copyToClipboard}
               type="button"
-              className="focus:outline-none text-white mt-4 bg-red-700 hover:bg-red-800 font-medium rounded-lg text-xl px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+              className="focus:outline-none text-white flex items-center justify-center w-24 h-12 mt-4 bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
             >
-              Limpar
+              {!hasCopied ? 'Copiar' : <AiFillCheckCircle />}
             </button>
           </div>
         </div>
