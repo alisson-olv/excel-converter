@@ -32,7 +32,7 @@ function App() {
 
   const handleConverter = () => {
 
-    if (optionChosed == 'apostrofo') {
+    if (optionChosed === 'apostrofo') {
 
       const items = inputList.split('\n');
 
@@ -43,7 +43,7 @@ function App() {
 
       setOutputList(convertedItems.join('\n'));
 
-    } else if (optionChosed == 'caracteres') {
+    } else if (optionChosed === 'caracteres') {
 
       const items = inputList.split('\n');
 
@@ -54,6 +54,35 @@ function App() {
           return paddedItem;
         }
         return trimmedItem;
+      });
+
+      setOutputList(convertedItems.join('\n'));
+
+    } else if (optionChosed === 'company-branch') {
+
+      const items = inputList.split('\n');
+      const convertedItems = items.map(item => {
+        const twoDigits = item.substring(0, 2);
+        return twoDigits;
+      });
+
+      setOutputList(convertedItems.join('\n'));
+
+    } else if (optionChosed === 'order-type') {
+
+      const items = inputList.toUpperCase().split('\n');
+
+      const convertedItems = items.map(item => {
+        if (item.includes('OUTROS')) {
+
+          const anotherOrder = item;
+          return anotherOrder;
+
+        } else {
+
+          const twoDigitsOrder = item.substring(0, 2);
+          return twoDigitsOrder;
+        }
       });
 
       setOutputList(convertedItems.join('\n'));
@@ -94,9 +123,25 @@ function App() {
               onClick={handleOptionChosed}
               type="button"
               value={'caracteres'}
-              className={`${optionChosed === 'caracteres' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 rounded-r-md hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
+              className={`${optionChosed === 'caracteres' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
             >
               Caracteres
+            </button>
+            <button
+              onClick={handleOptionChosed}
+              type="button"
+              value={'company-branch'}
+              className={`${optionChosed === 'company-branch' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
+            >
+              Filial
+            </button>
+            <button
+              onClick={handleOptionChosed}
+              type="button"
+              value={'order-type'}
+              className={`${optionChosed === 'order-type' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 rounded-r-md hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
+            >
+              Tipo de pedido
             </button>
           </div>
         </div>
@@ -144,20 +189,20 @@ function App() {
 
           <div>
             <label
-              htmlFor="itensToConvert"
+              htmlFor="itensConverted"
               className="block mb-2 text-3xl font-medium text-gray-900 dark:text-white"
             >
               Lista convertida {characterLength > 0 && `para ${characterLength} caracteres!`}
             </label>
 
             <textarea
-              id="itensToConvert"
+              id="itensConverted"
               rows="10"
               cols="50"
               onChange={handleInputChange}
               value={outputList}
               readOnly
-              className="block p-4 text-xl text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cole a lista de itens do Excel aqui">
+              className="block p-4 text-xl text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
             </textarea>
             <button
               onClick={clearList}
@@ -171,6 +216,6 @@ function App() {
       </div>
     </main>
   );
-}
+};
 
 export default App;
