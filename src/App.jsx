@@ -233,7 +233,7 @@ function App() {
             <button
               onClick={copyToClipboard}
               type="button"
-              className="focus:outline-none text-white flex items-center justify-center w-24 h-12 mt-4 bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900"
+              className="focus:outline-none text-white flex items-center justify-center w-24 h-12 mt-4 bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-red-900"
             >
               {!hasCopied ? 'Copiar' : <AiFillCheckCircle />}
             </button>
