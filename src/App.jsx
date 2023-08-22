@@ -7,6 +7,9 @@ function App() {
   const [optionChosed, setOptionChosed] = useState('apostrofo');
   const [characterLength, setCharacterLength] = useState(0);
 
+  // adicionar botão de copy no resultado
+  // adicionar opção de trocar um texto
+
   const handleOptionChosed = (e) => {
     setOptionChosed(e.target.value)
     setOutputList('');
@@ -22,34 +25,40 @@ function App() {
     setCharacterLength(e.target.value)
   }
 
-  console.log(characterLength);
-
-  const convertListCharacter = () => {
-    const items = inputList.split('\n');
-    const convertedItems = items.map(item => {
-      const trimmedItem = item.trim().replace("'", "");
-      if (trimmedItem.length < characterLength) {
-        const paddedItem = '0'.repeat(characterLength - trimmedItem.length) + trimmedItem;
-        return paddedItem;
-      }
-      return trimmedItem;
-    });
-    setOutputList(convertedItems.join('\n'));
-  };
-
-  const convertListApostrophe = () => {
-    const items = inputList.split('\n');
-    const convertedItems = items.map(item => {
-      const trimmedItem = item.trim().replace("'", "");
-      return trimmedItem;
-    });
-    setOutputList(convertedItems.join('\n'));
-  };
-
   const clearList = () => {
     setOutputList('');
     setInputList('');
   }
+
+  const handleConverter = () => {
+
+    if (optionChosed == 'apostrofo') {
+
+      const items = inputList.split('\n');
+
+      const convertedItems = items.map(item => {
+        const trimmedItem = item.trim().replaceAll("'", "");
+        return trimmedItem;
+      });
+
+      setOutputList(convertedItems.join('\n'));
+
+    } else if (optionChosed == 'caracteres') {
+
+      const items = inputList.split('\n');
+
+      const convertedItems = items.map(item => {
+        const trimmedItem = item.trim().replaceAll("'", "");
+        if (trimmedItem.length < characterLength) {
+          const paddedItem = '0'.repeat(characterLength - trimmedItem.length) + trimmedItem;
+          return paddedItem;
+        }
+        return trimmedItem;
+      });
+
+      setOutputList(convertedItems.join('\n'));
+    }
+  };
 
   return (
     <main className='dark:bg-slate-800 min-h-screen'>
@@ -124,23 +133,13 @@ function App() {
               className="block p-4 text-xl text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Cole a lista de itens do Excel aqui">
             </textarea>
 
-            {optionChosed === 'apostrofo' ?
-              <button
-                onClick={convertListApostrophe}
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 mt-4 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              >
-                Converter
-              </button>
-              :
-              <button
-                onClick={convertListCharacter}
-                type="button"
-                className="text-white bg-blue-700 hover:bg-blue-800 mt-4 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-              >
-                Converter
-              </button>
-            }
+            <button
+              onClick={handleConverter}
+              type="button"
+              className="text-white bg-blue-700 hover:bg-blue-800 mt-4 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+            >
+              Converter
+            </button>
           </div>
 
           <div>
