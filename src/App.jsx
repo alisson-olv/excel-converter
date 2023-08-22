@@ -14,21 +14,21 @@ function App() {
     setOptionChosed(e.target.value)
     setOutputList('');
     setInputList('');
-    setCharacterLength(0)
-  }
+    setCharacterLength(0);
+  };
 
   const handleInputChange = (event) => {
     setInputList(event.target.value);
   };
 
   const handleCharacterLength = (e) => {
-    setCharacterLength(e.target.value)
-  }
+    setCharacterLength(e.target.value);
+  };
 
   const clearList = () => {
     setOutputList('');
     setInputList('');
-  }
+  };
 
   const handleConverter = () => {
 
