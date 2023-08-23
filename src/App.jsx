@@ -76,6 +76,16 @@ function App() {
 
       setOutputList(convertedItems.join('\n'));
 
+    } else if (optionChosed === 'spaces') {
+      const items = inputList.split('\n');
+
+      const convertedItems = items.map(item => {
+        const trimmedItem = item.trim().replaceAll(" ", "").replaceAll("'", "");
+        return trimmedItem;
+      });
+
+      setOutputList(convertedItems.join('\n'));
+
     } else if (optionChosed === 'company-branch') {
       const items = inputList.split('\n');
       const convertedItems = items.map(item => {
@@ -142,6 +152,14 @@ function App() {
               className={`${optionChosed === 'caracteres' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
             >
               Caracteres
+            </button>
+            <button
+              onClick={handleOptionChosed}
+              type="button"
+              value={'spaces'}
+              className={`${optionChosed === 'spaces' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
+            >
+              Retirar espaço
             </button>
             <button
               onClick={handleOptionChosed}
