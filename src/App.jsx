@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { DarkThemeToggle, Flowbite } from 'flowbite-react';
 import { AiFillCheckCircle } from 'react-icons/ai';
 
@@ -76,6 +76,16 @@ function App() {
 
       setOutputList(convertedItems.join('\n'));
 
+    } else if (optionChosed === 'cnpj') {
+      const items = inputList.split('\n');
+
+      const convertedItems = items.map(item => {
+        const trimmedItem = item.trim().replaceAll(".", "").replaceAll(" ", "").replaceAll("-", "").replaceAll("/", "");
+        return trimmedItem;
+      });
+
+      setOutputList(convertedItems.join('\n'));
+
     } else if (optionChosed === 'spaces') {
       const items = inputList.split('\n');
 
@@ -90,16 +100,13 @@ function App() {
       const items = inputList.split('\n');
       const convertedItems = items.map(item => {
         const twoDigits = item.substring(0, 2);
-
         return twoDigits;
       });
 
       setOutputList(convertedItems.join('\n'));
 
     } else if (optionChosed === 'order-type') {
-
       const items = inputList.toUpperCase().split('\n');
-
       const convertedItems = items.map(item => {
         if (item.includes('OUTROS')) {
           const anotherOrder = item;
@@ -143,7 +150,7 @@ function App() {
               value={'apostrofo'}
               className={`${optionChosed === 'apostrofo' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 rounded-l-lg hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
             >
-              Retirar '
+              Retirar &apos;
             </button>
             <button
               onClick={handleOptionChosed}
@@ -152,6 +159,14 @@ function App() {
               className={`${optionChosed === 'caracteres' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
             >
               Caracteres
+            </button>
+            <button
+              onClick={handleOptionChosed}
+              type="button"
+              value={'cnpj'}
+              className={`${optionChosed === 'cnpj' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
+            >
+              CNPJ
             </button>
             <button
               onClick={handleOptionChosed}
@@ -260,6 +275,6 @@ function App() {
       </div>
     </main>
   );
-};
+}
 
 export default App;
