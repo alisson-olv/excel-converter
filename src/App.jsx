@@ -12,12 +12,6 @@ function App() {
   const [characterLength, setCharacterLength] = useState(0);
   const [hasCopied, setHasCopied] = useState(false);
 
-  const { setModalIsOpen } = useContext(ModalsContext);
-
-  const openModal = () => {
-    setModalIsOpen(true)
-  }
-
   const TIMEOUT_MS = 2000;
 
   useEffect(() => {
