@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
-import { DarkThemeToggle, Flowbite } from 'flowbite-react';
+import { DarkThemeToggle, Flowbite, Tooltip } from 'flowbite-react';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import WelcomeModal from './modal';
 
 function App() {
   const [inputList, setInputList] = useState('');
@@ -10,6 +11,23 @@ function App() {
   const [hasCopied, setHasCopied] = useState(false);
 
   const TIMEOUT_MS = 2000;
+
+  useEffect(() => {
+    const isDarkMode = localStorage.getItem("darkTheme") === "true";
+
+    if (isDarkMode) {
+      document.body.classList.add("dark");
+    } else {
+      document.body.classList.remove("dark");
+    }
+  }, []);
+
+  const handleDarkThemeToggle = () => {
+    document.body.classList.toggle("dark");
+
+    const isDarkMode = document.body.classList.contains("dark");
+    localStorage.setItem("darkTheme", isDarkMode);
+  };
 
   const handleOptionChosed = (e) => {
     setOptionChosed(e.target.value);
@@ -123,75 +141,92 @@ function App() {
   };
 
   return (
+
     <main className='dark:bg-slate-800 min-h-screen'>
-      <div className="container mx-auto pt-20 grid gap-10">
-        <div className='flex justify-between items-center'>
-          <div className='flex gap-3 items-center'>
-            <img src="/absolut.png" width={200} />
-            <h1 className='block text-4xl font-bold text-sky-700 dark:text-white'>Conversão de Nº de NF</h1>
+      <div className="App">
+        <WelcomeModal />
+      </div>
+      <div className='pb-10'>
+        <img src="banner-absolut.jpg" className='object-contain' />
+      </div>
+      <div className="container max-w-[1300px] mx-auto pb-20 px-10 grid gap-10">
+        <div>
+          <div className='flex gap-10 justify-between items-center'>
+            <h1 className='block text-4xl text-gray-900 font-bold dark:text-white'>Conversão de Nº de NF</h1>
+            <Flowbite>
+              <div className='flex gap-3 items-center'>
+                <p className='text-sm font-bold text-gray-900 dark:text-white'>Tema</p>
+                <DarkThemeToggle onClick={handleDarkThemeToggle} className='w-12 flex items-center justify-center border-4 border-[#1e4b00] text-[#1e4b00] dark:text-white dark:border-white' />
+              </div>
+            </Flowbite>
           </div>
-          <Flowbite>
-            <div className='flex gap-3 items-center'>
-              <p className='text-sm font-bold text-gray-900 dark:text-white'>Tema</p>
-              <DarkThemeToggle className='w-12 flex items-center justify-center border-4 border-pink-400 text-pink-400' />
-            </div>
-          </Flowbite>
         </div>
         <hr />
-
         <div>
           <h2 className='block mb-4 text-3xl font-medium text-gray-900 dark:text-white'>
-            Opção escolhida
+            Tipos de Ajustes
           </h2>
           <div className="inline-flex rounded-md shadow-sm" role="group">
-            <button
-              onClick={handleOptionChosed}
-              type="button"
-              value={'apostrofo'}
-              className={`${optionChosed === 'apostrofo' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 rounded-l-lg hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
-            >
-              Retirar &apos;
-            </button>
-            <button
-              onClick={handleOptionChosed}
-              type="button"
-              value={'caracteres'}
-              className={`${optionChosed === 'caracteres' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
-            >
-              Caracteres
-            </button>
-            <button
-              onClick={handleOptionChosed}
-              type="button"
-              value={'cnpj'}
-              className={`${optionChosed === 'cnpj' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
-            >
-              CNPJ
-            </button>
-            <button
-              onClick={handleOptionChosed}
-              type="button"
-              value={'spaces'}
-              className={`${optionChosed === 'spaces' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
-            >
-              Retirar espaço
-            </button>
-            <button
-              onClick={handleOptionChosed}
-              type="button"
-              value={'company-branch'}
-              className={`${optionChosed === 'company-branch' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
-            >
-              Filial
-            </button>
-            <button
-              onClick={handleOptionChosed}
-              type="button"
-              value={'order-type'}
-              className={`${optionChosed === 'order-type' ? 'bg-pink-400 text-white font-bold dark:bg-pink-400' : ''} px-4 py-2 text-xl font-medium text-gray-900 border border-gray-200 rounded-r-md hover:bg-pink-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:text-gray-900 dark:hover:bg-pink-200 dark:focus:ring-blue-500 dark:focus:text-white`}
-            >
-              Tipo de pedido
-            </button>
+            <Tooltip className='dark:bg-white dark:text-black' content="Retira o ' (apóstrofo) do texto/número que o excel insere para forçar a formatação como texto.">
+              <button
+                onClick={handleOptionChosed}
+                type="button"
+                value={'apostrofo'}
+                className={`${optionChosed === 'apostrofo' ? 'bg-[#1e4b00] text-white font-bold dark:bg-[#1e4b00]' : ''} px-4 py-2 text-xl font-medium hover:text-white border border-gray-200 rounded-l-lg hover:bg-[#2d7100] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-[#2d7100] dark:focus:ring-blue-500 dark:focus:text-white`}
+              >
+                Retirar &apos;
+              </button>
+            </Tooltip>
+            <Tooltip className='dark:bg-white dark:text-black' content="Adiciona zeros à esquerda para que todas as linhas tenham o mesmo tamanho, definido pela quantidade de caracteres escolhida.">
+              <button
+                onClick={handleOptionChosed}
+                type="button"
+                value={'caracteres'}
+                className={`${optionChosed === 'caracteres' ? 'bg-[#1e4b00] text-white font-bold dark:bg-[#1e4b00]' : ''} px-4 py-2 text-xl font-medium hover:text-white border border-gray-200 hover:bg-[#2d7100] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-[#2d7100] dark:focus:ring-blue-500 dark:focus:text-white`}
+              >
+                Caracteres
+              </button>
+            </Tooltip>
+            <Tooltip className='dark:bg-white dark:text-black' content="Remove ponto, traço e barra dos CPNJ's.">
+              <button
+                onClick={handleOptionChosed}
+                type="button"
+                value={'cnpj'}
+                className={`${optionChosed === 'cnpj' ? 'bg-[#1e4b00] text-white font-bold dark:bg-[#1e4b00]' : ''} px-4 py-2 text-xl font-medium hover:text-white border border-gray-200 hover:bg-[#2d7100] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-[#2d7100] dark:focus:ring-blue-500 dark:focus:text-white`}
+              >
+                CNPJ
+              </button>
+            </Tooltip>
+            <Tooltip className='dark:bg-white dark:text-black' content="Remove o espaço entre números/textos.">
+              <button
+                onClick={handleOptionChosed}
+                type="button"
+                value={'spaces'}
+                className={`${optionChosed === 'spaces' ? 'bg-[#1e4b00] text-white font-bold dark:bg-[#1e4b00]' : ''} px-4 py-2 text-xl font-medium hover:text-white border border-gray-200 hover:bg-[#2d7100] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-[#2d7100] dark:focus:ring-blue-500 dark:focus:text-white`}
+              >
+                Retirar espaço
+              </button>
+            </Tooltip>
+            <Tooltip className='dark:bg-white dark:text-black' content="Retorna apenas os dois primeiros dígitos do número inserido que é usado como filial da empresa.">
+              <button
+                onClick={handleOptionChosed}
+                type="button"
+                value={'company-branch'}
+                className={`${optionChosed === 'company-branch' ? 'bg-[#1e4b00] text-white font-bold dark:bg-[#1e4b00]' : ''} px-4 py-2 text-xl font-medium hover:text-white border border-gray-200 hover:bg-[#2d7100] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-[#2d7100] dark:focus:ring-blue-500 dark:focus:text-white`}
+              >
+                Filial
+              </button>
+            </Tooltip>
+            <Tooltip className='dark:bg-white dark:text-black' content="Retorna o tipo do pedido.">
+              <button
+                onClick={handleOptionChosed}
+                type="button"
+                value={'order-type'}
+                className={`${optionChosed === 'order-type' ? 'bg-[#1e4b00] text-white font-bold dark:bg-[#1e4b00]' : ''} px-4 py-2 text-xl font-medium hover:text-white border border-gray-200 hover:bg-[#2d7100] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-[#2d7100] dark:focus:ring-blue-500 dark:focus:text-white rounded-r-md`}
+              >
+                Tipo de pedido
+              </button>
+            </Tooltip>
           </div>
         </div>
 
@@ -209,7 +244,7 @@ function App() {
           </div>
         }
 
-        <div className='flex gap-20'>
+        <div className='flex flex-wrap gap-20'>
           <div>
             <label
               htmlFor="itensToConvert"
@@ -231,7 +266,7 @@ function App() {
               <button
                 onClick={handleConverter}
                 type="button"
-                className="text-white bg-green-700 hover:bg-green-800 mt-4 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="text-white bg-[#0060a9] hover:bg-[#0045a0] mt-4 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-[#0060a9] dark:hover:bg-[#0045a0] focus:outline-none dark:focus:ring-blue-800"
               >
                 Converter
               </button>
@@ -266,12 +301,15 @@ function App() {
             <button
               onClick={copyToClipboard}
               type="button"
-              className="focus:outline-none text-white flex items-center justify-center w-24 h-12 mt-4 bg-green-700 hover:bg-green-800 font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-red-900"
+              className="focus:outline-none text-white flex items-center justify-center w-24 h-12 mt-4 bg-[#0060a9] hover:bg-[#0045a0] font-medium rounded-lg text-xl px-5 py-2.5 dark:bg-[#0060a9] dark:hover:bg-[#0045a0] dark:focus:ring-red-900"
             >
               {!hasCopied ? 'Copiar' : <AiFillCheckCircle />}
             </button>
           </div>
         </div>
+      </div>
+      <div>
+        <img src="footer-banner.jpg" className='object-contain' />
       </div>
     </main>
   );
