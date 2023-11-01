@@ -157,7 +157,7 @@ function App() {
       <div className='pb-10'>
         <img src="banner-absolut.jpg" className='object-contain' />
       </div>
-      <div className="container max-w-[1300px] mx-auto pb-20 px-10 grid gap-10">
+      <div className="container max-w-[1400px] mx-auto pb-20 px-10 grid gap-10">
         <div className='grid gap-10'>
           <div className='flex gap-10 justify-between items-center'>
             <h1 className='block text-4xl text-gray-900 font-bold dark:text-white'>Conversão de Nº de NF</h1>
@@ -168,7 +168,7 @@ function App() {
               </div>
             </Flowbite>
           </div>
-          <div className='max-w-[250px]'>
+          <div className='max-w-[300px]'>
             <p onClick={openModal} className='bg-[#c4cbd4] flex gap-3 p-4 rounded-md items-center justify-center text-sm font-medium text-gray-900 cursor-pointer hover:bg-slate-300'>
               <BsArrowReturnRight />  Reveja as últimas atualizações
             </p>
