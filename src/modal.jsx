@@ -43,7 +43,7 @@ function WelcomeModal({ cookies }) {
           <img src="garrafa4.png" /> - Novo layout e cores.
         </p>
         <p className='block mb-2 text-md text-gray-900'>
-          Para mais pedidos consultar a administradora Amanda.
+          Para mais pedidos consultar a maravilhosa Amanda.
         </p>
         <button
           onClick={closeModal}
