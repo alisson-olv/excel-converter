@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { DarkThemeToggle, Flowbite, Tooltip } from 'flowbite-react';
 import { AiFillCheckCircle } from 'react-icons/ai';
-import { ModalsContext } from './context/ModalContext';
+import { ModalsContext } from './context/ModalContext.jsx';
 import WelcomeModal from './modal';
 import { BsArrowReturnRight } from "react-icons/bs";
 
