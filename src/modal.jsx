@@ -31,7 +31,7 @@ function WelcomeModal({ cookies }) {
           Últimas atualizações
         </h2>
         <p className='mb-2 text-md text-gray-900 flex items-center'>
-          <img src="garrafa1.png" /> - Os itens possuem explicação do que faz, basta descansar o mouse em cima de cada um;
+          <img src="garrafa1.png" /> - O menu possui explicação do que cada item faz, basta descansar o mouse em cima;
         </p>
         <p className='mb-2 text-md text-gray-900 flex items-center'>
           <img src="garrafa2.png" /> - Ajuste para CNPJ;
