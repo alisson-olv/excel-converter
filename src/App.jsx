@@ -308,9 +308,6 @@ function App() {
           </div>
         </div>
       </div>
-      <div>
-        <img src="footer-banner.jpg" className='object-contain' />
-      </div>
     </main>
   );
 }
