@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { DarkThemeToggle, Flowbite, Tooltip } from 'flowbite-react';
 import { AiFillCheckCircle } from 'react-icons/ai';
-import { ModalsContext } from './context/ModalContext.jsx';
+import { ModalsContext } from './contexts/ModalContext.jsx';
 import WelcomeModal from './modal';
 import { BsArrowReturnRight } from "react-icons/bs";
 
@@ -11,6 +11,12 @@ function App() {
   const [optionChosed, setOptionChosed] = useState('apostrofo');
   const [characterLength, setCharacterLength] = useState(0);
   const [hasCopied, setHasCopied] = useState(false);
+
+  const { setModalIsOpen } = useContext(ModalsContext);
+
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
 
   const TIMEOUT_MS = 2000;
 

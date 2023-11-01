@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { withCookies } from 'react-cookie';
 import Modal from 'react-modal';
-import { ModalsContext } from './context/ModalContext';
+import { ModalsContext } from './contexts/ModalContext';
 
 Modal.setAppElement('#root');
 
