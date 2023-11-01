@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { withCookies } from 'react-cookie';
 import Modal from 'react-modal';
+import { ModalsContext } from './context/ModalContext';
 
 Modal.setAppElement('#root');
 
 function WelcomeModal({ cookies }) {
-  const [modalIsOpen, setModalIsOpen] = useState(false);
+  const { modalIsOpen, setModalIsOpen } = useContext(ModalsContext);
 
   useEffect(() => {
     const hasVisitedBefore = cookies.get('visitedBefore');

@@ -1,7 +1,9 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { DarkThemeToggle, Flowbite, Tooltip } from 'flowbite-react';
 import { AiFillCheckCircle } from 'react-icons/ai';
+import { ModalsContext } from './context/ModalContext';
 import WelcomeModal from './modal';
+import { BsArrowReturnRight } from "react-icons/bs";
 
 function App() {
   const [inputList, setInputList] = useState('');
@@ -9,6 +11,12 @@ function App() {
   const [optionChosed, setOptionChosed] = useState('apostrofo');
   const [characterLength, setCharacterLength] = useState(0);
   const [hasCopied, setHasCopied] = useState(false);
+
+  const { setModalIsOpen } = useContext(ModalsContext);
+
+  const openModal = () => {
+    setModalIsOpen(true)
+  }
 
   const TIMEOUT_MS = 2000;
 
@@ -150,7 +158,7 @@ function App() {
         <img src="banner-absolut.jpg" className='object-contain' />
       </div>
       <div className="container max-w-[1300px] mx-auto pb-20 px-10 grid gap-10">
-        <div>
+        <div className='grid gap-10'>
           <div className='flex gap-10 justify-between items-center'>
             <h1 className='block text-4xl text-gray-900 font-bold dark:text-white'>Conversão de Nº de NF</h1>
             <Flowbite>
@@ -159,6 +167,11 @@ function App() {
                 <DarkThemeToggle onClick={handleDarkThemeToggle} className='w-12 flex items-center justify-center border-4 border-[#1e4b00] text-[#1e4b00] dark:text-white dark:border-white' />
               </div>
             </Flowbite>
+          </div>
+          <div className='max-w-[250px]'>
+            <p onClick={openModal} className='bg-[#c4cbd4] flex gap-3 p-4 rounded-md items-center justify-center text-sm font-medium text-gray-900 cursor-pointer hover:bg-slate-300'>
+              <BsArrowReturnRight />  Reveja as últimas atualizações
+            </p>
           </div>
         </div>
         <hr />
