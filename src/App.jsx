@@ -2,7 +2,8 @@ import { useContext, useEffect, useState } from 'react';
 import { DarkThemeToggle, Flowbite, Tooltip } from 'flowbite-react';
 import { AiFillCheckCircle } from 'react-icons/ai';
 import { ModalsContext } from './contexts/ModalContext.jsx';
-import WelcomeModal from './modal';
+import WelcomeModal from './components/Modal.jsx';
+import supplierList from './components/SupplierList.jsx';
 import { BsArrowReturnRight } from "react-icons/bs";
 
 function App() {
@@ -102,6 +103,23 @@ function App() {
 
       setOutputList(convertedItems.join('\n'));
 
+    } else if (optionChosed === 'an8') {
+      const items = inputList.split('\n');
+
+      const convertedItems = items.map(item => {
+        const trimmedItem = item.trim().replaceAll(".", "").replaceAll(" ", "").replaceAll("-", "").replaceAll("/", "");
+        return trimmedItem;
+      });
+
+      const outputItems = convertedItems.map(cnpj => {
+        const supplier = supplierList.find(item => item.cnpj === cnpj);
+        return supplier ? supplier.an8 : "Fornecedor sem cadastro";
+      });
+
+      const filteredOutputItems = outputItems.filter(item => item !== null);
+
+      setOutputList(filteredOutputItems.join('\n'));
+
     } else if (optionChosed === 'cnpj') {
       const items = inputList.split('\n');
 
@@ -198,6 +216,16 @@ function App() {
                 className={`${optionChosed === 'caracteres' ? 'bg-[#1e4b00] text-white font-bold dark:bg-[#1e4b00]' : ''} px-4 py-2 text-xl font-medium hover:text-white border border-gray-200 hover:bg-[#2d7100] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-[#2d7100] dark:focus:ring-blue-500 dark:focus:text-white`}
               >
                 Caracteres
+              </button>
+            </Tooltip>
+            <Tooltip className='dark:bg-white dark:text-black' content="Consulta o AN8 do fornecedor.">
+              <button
+                onClick={handleOptionChosed}
+                type="button"
+                value={'an8'}
+                className={`${optionChosed === 'an8' ? 'bg-[#1e4b00] text-white font-bold dark:bg-[#1e4b00]' : ''} px-4 py-2 text-xl font-medium hover:text-white border border-gray-200 hover:bg-[#2d7100] dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:hover:bg-[#2d7100] dark:focus:ring-blue-500 dark:focus:text-white`}
+              >
+                AN8
               </button>
             </Tooltip>
             <Tooltip className='dark:bg-white dark:text-black' content="Remove ponto, traço e barra dos CPNJ's.">

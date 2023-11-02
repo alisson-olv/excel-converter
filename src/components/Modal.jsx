@@ -1,7 +1,7 @@
-import { useState, useEffect, useContext } from 'react';
+import { useEffect, useContext } from 'react';
 import { withCookies } from 'react-cookie';
 import Modal from 'react-modal';
-import { ModalsContext } from './contexts/ModalContext';
+import { ModalsContext } from '../contexts/ModalContext';
 
 Modal.setAppElement('#root');
 
@@ -41,7 +41,10 @@ function WelcomeModal({ cookies }) {
           <img src="garrafa3.png" /> - O tema é salvo em sessão conforme a sua última escolha;
         </p>
         <p className='mb-5 text-md text-gray-900 flex items-center'>
-          <img src="garrafa4.png" /> - Novo layout e cores.
+          <img src="garrafa4.png" /> - Novo layout e cores;
+        </p>
+        <p className='mb-2 text-md text-gray-900 flex items-center'>
+          <img src="garrafa1.png" /> - Consulta de AN8 de fornecedor.
         </p>
         <p className='block mb-2 text-md text-gray-900'>
           Para mais pedidos consultar a maravilhosa Amanda.
