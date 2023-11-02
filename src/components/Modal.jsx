@@ -17,7 +17,7 @@ function WelcomeModal({ cookies }) {
 
   const closeModal = () => {
     setModalIsOpen(false);
-    cookies.set('visitedBefore', true, { path: '/' });
+    cookies.set('visitedBefore', true, { path: '/', expires: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000) });
   };
 
   return (
